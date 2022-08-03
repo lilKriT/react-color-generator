@@ -4,13 +4,20 @@ import SingleColor from "./SingleColor";
 import Values from "values.js";
 
 function App() {
-  const [color, setColor] = useState("");
+  const [color, setColor] = useState("#f85b1a");
   const [error, setError] = useState(false);
   const [list, setList] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Hi");
+
+    try {
+      let shades = new Values(color).all(10);
+      setList(shades);
+    } catch (error) {
+      setError(true);
+      console.log(error);
+    }
   };
 
   return (
@@ -24,7 +31,8 @@ function App() {
             id="color"
             value={color}
             onChange={(e) => setColor(e.target.value)}
-            placeholder="f85b1a"
+            placeholder="#f85b1a"
+            className={`${error ? "error" : null}`}
           />
           <button className="btn" type="submit">
             Submit
@@ -32,7 +40,9 @@ function App() {
         </form>
       </section>
       <section className="colors">
-        <h4>Colors go here</h4>
+        {list.map((color, index) => (
+          <SingleColor key={index} {...color} index={index} hex={color.hex} />
+        ))}
       </section>
     </>
   );
