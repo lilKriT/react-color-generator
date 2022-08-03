@@ -1,5 +1,41 @@
+import { useState } from "react";
+import SingleColor from "./SingleColor";
+
+import Values from "values.js";
+
 function App() {
-  return <h2>Color generator</h2>;
+  const [color, setColor] = useState("");
+  const [error, setError] = useState(false);
+  const [list, setList] = useState([]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Hi");
+  };
+
+  return (
+    <>
+      <section className="container">
+        <h3>Color generator</h3>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="color"
+            id="color"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+            placeholder="f85b1a"
+          />
+          <button className="btn" type="submit">
+            Submit
+          </button>
+        </form>
+      </section>
+      <section className="colors">
+        <h4>Colors go here</h4>
+      </section>
+    </>
+  );
 }
 
 export default App;
